@@ -1,0 +1,125 @@
+
+app-id: org.cuemol.Cuemol
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+command: cuemol
+finish-args:
+  - --share=network
+  - --socket=x11
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=host
+
+modules:
+  - name: fftw2
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://fftw.org/fftw-2.1.5.tar.gz
+        sha256: f8057fae1c7df8b99116783ef3e94a6a44518d49c72e2e630c24b689c6022630
+    config-opts:
+      - --enable-shared
+      - --enable-float
+      - --disable-static
+    build-commands:
+      - |
+        if [ "$(uname -m)" = "aarch64" ]; then
+          sed -i 's/-flat_namespace -undefined suppress/-undefined dynamic_lookup/g' configure
+        fi
+        ./configure --prefix=/app --enable-shared --enable-float --disable-static
+        make
+        make install
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --with-icu=/app --prefix=/app --libdir=/app/lib
+      - ./b2 install --prefix=/app --libdir=/app/lib -d2 -j$(nproc) threading=multi,single link=shared,static
+    sources:
+      - type: archive
+        url: https://github.com/boostorg/boost/archive/refs/tags/boost-1.44.0.tar.gz
+        sha256: 84fa600c4b6919063942bfc8d51383580f3042fd0cfc5471a77bb0e35eb0edd2
+    config-opts:
+      - --without-libraries=[python, mpi]
+    cleanup:
+      - /app/share/boost
+    build-options:
+      env:
+        CXXFLAGS: "-std=c++14"
+
+  - name: xulrunner
+    buildsystem: simple
+    sources:
+      - type: archive
+        url: https://ftp.mozilla.org/pub/xulrunner/releases/23.0.1/runtimes/xulrunner-23.0.1.en-US.linux-x86_64.tar.bz2
+        sha256:
+      - type: archive
+        url:https://ftp.mozilla.org/pub/xulrunner/releases/23.0.1/sdk/xulrunner-23.0.1.en-US.linux-x86_64.sdk.tar.bz2
+        sha256:
+    config-opts:
+      - --enable-shared
+      - --enable-float
+      - --disable-static
+    build-commands:
+      - |
+        if [ "$(uname -m)" = "aarch64" ]; then
+          sed -i 's/-flat_namespace -undefined suppress/-undefined dynamic_lookup/g' configure
+        fi
+        ./configure --prefix=/app --enable-shared --enable-float --disable-static
+        make
+        make install
+
+  - name: cgal
+    buildsystem: cmake
+    sources:
+      - type: archive
+        url: https://github.com/CGAL/cgal/archive/refs/tags/releases/CGAL-4.6.1.tar.gz
+        sha256: 4ec25e1a9b5ff06416f36d9f86bfdb337d28f210a06d2c70216c4d3f99c6a07b
+    config-opts:
+      - "-DBOOST_ROOT=app/proj/boost"
+      - "-DCMAKE_INSTALL_PREFIX=app/proj/CGAL-4.6.1"
+      - "-DBUILD_SHARED_LIBS=FALSE"
+      - "-DCMAKE_CXX_FLAGS=-fPIC -DPIC"
+
+  - name: glew
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://fftw.org/fftw-2.1.5.tar.gz
+        sha256: f8057fae1c7df8b99116783ef3e94a6a44518d49c72e2e630c24b689c6022630
+    config-opts:
+      - --enable-shared
+      - --enable-float
+      - --disable-static
+    build-commands:
+      - |
+        if [ "$(uname -m)" = "aarch64" ]; then
+          sed -i 's/-flat_namespace -undefined suppress/-undefined dynamic_lookup/g' configure
+        fi
+        ./configure --prefix=/app --enable-shared --enable-float --disable-static
+        make
+        make install
+
+  - name: quemol
+    buildsystem: cmake
+    config-opts:
+      - --with-enhanced-ligand-tools
+      - --with-boost=/app
+      - --with-boost-libdir=/app/lib
+      - --with-rdkit-prefix=/app
+      - --with-fftw-prefix=/app/fftw2
+      - --with-backward
+      - --with-libdw
+      - BOOST_PYTHON_LIB=boost_python312-mt
+    sources:
+      - type: archive
+        url: https://github.com/CueMol/cuemol2/archive/refs/tags/Release_2.2.2.391.tar.gz
+        sha256: 447caa7bdd6f87b738d20f8db15aa278476c308e22506004ed145e04f85e0413
+    build-options:
+      append-path:
+        - /app/lib
+        - /app/bin
+      environment:
+        CXXFLAGS: "-fPIC"
+        CPPFLAGS: "-D_USE_BOOST=1"
