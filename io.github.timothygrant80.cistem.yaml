@@ -1,0 +1,27 @@
+app-id: io.github.timothygrant80.cistem
+runtime: org.freedesktop.Platform
+runtime-version: "23.08"
+sdk: org.freedesktop.Sdk
+
+modules:
+  - name: wxWidgets
+    buildsystem: autotools
+    config-opts:
+      - --enable-stdpaths
+      - --enable-config
+    sources:
+      - type: git
+        url: https://github.com/wxWidgets/wxWidgets.git
+        tag: v3.0.2
+
+  - name: cistem
+    buildsystem: autotools
+    # config-opts:
+    #   - --with-wx-config=/app/libexec/wxWidgets/bin/wx-config
+    sources:
+      - type: archive
+        url: https://grigoriefflab.umassmed.edu/sites/default/files/cistem-1.0.0-beta-source-code.tar.gz
+        sha256: c62068f53d0a269ffa1bfff34641597d3795989a930686437fba9eed7a991af6
+      # - type: shell
+      #   commands:
+      #     - ln -sf /app/bin/wx-config-3.0 /app/bin/wx-config
