@@ -1,0 +1,34 @@
+diff --git a/configure b/configure
+index 41b092a..6c08810 100755
+--- a/configure
++++ b/configure
+@@ -15182,21 +15182,14 @@ _ACEOF
+ 
+         fi
+ 
+-# Verify minimus requires
+-vers=`echo $wxversion | $AWK 'BEGIN { FS = "."; } { printf "% d", ($1 * 1000 + $2) * 1000 + $3;}'`
+-if test -n "$vers" && test "$vers" -eq 3000002; then
+-        WX_CPPFLAGS="`$WXCONFIG --cppflags`"
+-        WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
+-        WX_LIBS="`$WXCONFIG --libs richtext,std,aui`"
+-
+-        WX_CPPFLAGS_BASE="`$WXCONFIG --cppflags base`"
+-        WX_CXXFLAGS_BASE="`$WXCONFIG --cxxflags base | sed -e 's/-fno-exceptions//'`"
+-        WX_LIBS_BASE="`$WXCONFIG --libs base,net`"
+-        wx_is_available=1
+-else
+-        as_fn_error $? "\"Only wxWidgets version 3.0.2 is currently supported.\"" "$LINENO" 5
+-        wx_is_available=0
+-fi
++WX_CPPFLAGS="`$WXCONFIG --cppflags`"
++WX_CXXFLAGS="`$WXCONFIG --cxxflags | sed -e 's/-fno-exceptions//'`"
++WX_LIBS="`$WXCONFIG --libs richtext,std,aui`"
++
++WX_CPPFLAGS_BASE="`$WXCONFIG --cppflags base`"
++WX_CXXFLAGS_BASE="`$WXCONFIG --cxxflags base | sed -e 's/-fno-exceptions//'`"
++WX_LIBS_BASE="`$WXCONFIG --libs base,net`"
++wx_is_available=1
+ 
+ # Do FFTW3 Checks
+ 
