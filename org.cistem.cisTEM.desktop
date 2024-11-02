@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=cisTEM
+GenericName=Computational Imaging System for Transmission Electron Microscopy
+Comment=Computational Imaging System for Transmission Electron Microscopy
+Exec=cisTEM
+Icon=org.cistem.cistem
+StartupWMClass=cisTEM
+Terminal=false
+Categories=Science;Chemistry;Biology;
+MimeType=x;y;
