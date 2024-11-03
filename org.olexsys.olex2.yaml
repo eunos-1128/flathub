@@ -1,0 +1,68 @@
+app-id: org.olexsys.olex2
+runtime: org.freedesktop.Platform
+runtime-version: "23.08"
+sdk: org.freedesktop.Sdk
+cleanup:
+  - /include
+  - /lib/*.a
+  - /lib/*.la
+  - /lib/pkgconfig
+finish-args:
+  - --filesystem=home
+  - --share=ipc
+  - --device=dri
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=network
+
+modules:
+  - shared-modules/glu/glu-9.json
+
+  - name: wxWidgets
+    buildsystem: autotools
+    config-opts:
+      - --enable-clipboard
+      - --enable-controls
+      - --enable-dataviewctrl
+      - --enable-display
+      - --enable-dnd
+      - --enable-graphics_ctx
+      - --enable-std_string
+      - --enable-svg
+      - --enable-unicode
+      - --enable-webviewwebkit
+      - --with-gtk=3
+      - --with-expat
+      - --with-libjpeg
+      - --with-libpng
+      - --with-libtiff
+      - --with-opengl
+      - --with-zlib
+      - --disable-dependency-tracking
+      - --disable-tests
+      - --disable-precomp-headers
+      - --disable-monolithic
+    sources:
+      - type: archive
+        url: https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.6/wxWidgets-3.2.6.tar.bz2
+        sha256: 939e5b77ddc5b6092d1d7d29491fe67010a2433cf9b9c0d841ee4d04acb9dce7
+
+  - name: olex2
+    buildsystem: cmake-ninja
+    # build-options:
+    #   env:
+    #     WX_CONFIG: /app/bin/wx-config
+    post-install:
+      - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
+      - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      # - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+    sources:
+      - type: git
+        url: https://github.com/pcxod/olex2.git
+        commit: 19aeb66f21119f1cc932424ce4a52da66759b895
+      - type: file
+        path: org.olexsys.olex2.svg
+      - type: file
+        path: org.olexsys.olex2.desktop
+      # - type: file
+      #   path: org.olexsys.olex2.metainfo.xml

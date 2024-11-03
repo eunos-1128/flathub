@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Type=Application
+Name=olex2
+GenericName=Crystallography GUI
+Comment="Olex2 is visualisation software for small-molecule crystallography"
+TryExec=/app/bin/olex2
+Exec=/app/bin/olex2
+Icon=org.olexsys.olex2
+MimeType=image/x-foo;
+Categories=Science;Chemistry;Engineering;Education;Application;
+X-Trminal=true
+X-Desktop-File-Install-Version=0.13
