@@ -2,8 +2,8 @@
 <component type="desktop">
   <id>org.cistem.cisTEM</id>
   <launchable type="desktop-id">org.cistem.cisTEM.desktop</launchable>
-  <metadata_license>GFDL-1.3</metadata_license>
-  <project_license>BSD-3-Clause</project_license>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>BSD-3-Clause AND LicenseRef-HHMI</project_license>
   <name>cisTEM</name>
   <summary>Computational Imaging System for Transmission Electron Microscopy</summary>
   <description>
@@ -12,6 +12,9 @@
     </p>
     <p>
       It was originally developed by Tim Grant, Alexis Rohou and Nikolaus Grigorieff and comprises a number of tools to process image data including movies, micrographs and stacks of single-particle images, implementing a complete “pipeline” of processing steps to obtain high-resolution single-particle reconstructions.
+    </p>
+    <p>
+      This software is licensed under a 3-clause BSD license with Howard Hughes Medical Institute as the copyright holder.
     </p>
   </description>
   <screenshots>
@@ -41,7 +44,7 @@
   <url type="vcs-browser">https://github.com/timothygrant80/cisTEM</url>
   <url type="bugtracker">https://github.com/timothygrant80/cisTEM/issues</url>
   <developer id="io.github.cistem-org">
-    <name>cistem-org</name>
+    <name>cisTEM.org</name>
   </developer>
   <content_rating type="oars-1.1" />
   <releases>
