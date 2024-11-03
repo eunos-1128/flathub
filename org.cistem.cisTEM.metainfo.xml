@@ -20,18 +20,21 @@
   <screenshots>
     <screenshot type="default">
       <image type="source">
-        https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/web/screenshots/other/coot-viagra-1.png</image>
-      <caption></caption>
+        https://iiif.elifesciences.org/lax/35383%2Felife-35383-fig1-v2.tif/full/1500,/0/default.jpg
+      </image>
+      <caption>Movie alignment panel of the cisTEM GUI.</caption>
     </screenshot>
     <screenshot>
       <image type="source">
-        https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/web/screenshots/other/coot-ligand-builder.png</image>
-      <caption></caption>
+        https://iiif.elifesciences.org/lax/35383%2Felife-35383-fig3-v2.tif/full/1500,/0/default.jpg
+      </image>
+      <caption>Particle picking panel of the cisTEM GUI.</caption>
     </screenshot>
     <screenshot>
       <image type="source">
-        https://www2.mrc-lmb.cam.ac.uk/personal/pemsley/coot/web/screenshots/apoferritin/sapphires-and-emeralds.png</image>
-        <caption></caption>
+        https://iiif.elifesciences.org/lax/35383%2Felife-35383-fig4-v2.tif/full/1500,/0/default.jpg
+      </image>
+        <caption>Manual refinement panel with Expert Options exposed.</caption>
     </screenshot>
   </screenshots>
   <branding>
