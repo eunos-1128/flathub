@@ -8,4 +8,4 @@ Icon=org.cistem.cisTEM
 StartupWMClass=cisTEM
 Terminal=false
 Categories=Science;Chemistry;Biology;
-MimeType=x;y;
+MimeType=application/x-mrc;application/x-ccp4;text/x-star;application/x-emdb;image/tiff;image/jpeg;
