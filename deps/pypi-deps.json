@@ -1,8 +1,8 @@
 {
-    "name": "python3-scons",
+    "name": "python3-SCons",
     "buildsystem": "simple",
     "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"scons\" --no-build-isolation"
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"SCons==4.8.1\" --no-build-isolation"
     ],
     "sources": []
 }

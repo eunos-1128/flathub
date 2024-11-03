@@ -1,1 +1,1 @@
-scons
+SCons==4.8.1
