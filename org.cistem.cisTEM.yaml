@@ -71,13 +71,19 @@ modules:
       - --disable-tests
       - --disable-precomp-headers
       - --disable-monolithic
+    build-options:
+      env:
+        wxWidgets_USE_DEBUG: 1
     sources:
-      - type: git
-        url: https://github.com/wxWidgets/wxWidgets.git
-        tag: v3.0.2
+      - type: archive
+        url: https://sourceforge.net/projects/wxwindows/files/3.0.2/wxWidgets-3.0.2.tar.bz2
+        sha256: 346879dc554f3ab8d6da2704f651ecb504a22e9d31c17ef5449b129ed711585d
 
   - name: cistem
     buildsystem: autotools
+    # build-options:
+    #   env:
+    #     WX_CONFIG: /app/bin/wx-config
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
@@ -86,9 +92,9 @@ modules:
       - type: archive
         url: https://grigoriefflab.umassmed.edu/sites/default/files/cistem-1.0.0-beta-source-code.tar.gz
         sha256: c62068f53d0a269ffa1bfff34641597d3795989a930686437fba9eed7a991af6
-      # To avoid wxWidgets version check quirk
-      - type: patch
-        path: configure.patch
+      # # To avoid wxWidgets version check quirk
+      # - type: patch
+      #   path: configure.patch
       - type: file
         path: org.cistem.cisTEM.svg
       - type: file
