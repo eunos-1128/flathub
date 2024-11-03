@@ -16,40 +16,12 @@ finish-args:
   - --share=network
 
 modules:
-  # - name: fftw
-  #   buildsystem: autotools
-  #   config-opts:
-  #     - --enable-shared
-  #     - --enable-float
-  #     - --disable-static
-  #   sources:
-  #     - type: archive
-  #       url: https://fftw.org/fftw-3.3.10.tar.gz
-  #       sha256: 56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467
-  #     - type: shell
-  #       commands:
-  #         - cp /usr/share/gnu-config/config.sub .
-  #         - cp /usr/share/gnu-config/config.guess .
-
-  # - name: glu
-  #   buildsystem: meson
-  #   config-opts: 
-  #     - -Dgl_provider=gl
-  #   sources:
-  #     - type: archive
-  #       url: https://archive.mesa3d.org/glu/glu-9.0.3.tar.xz
-  #       sha256: bd43fe12f374b1192eb15fe20e45ff456b9bc26ab57f0eee919f96ca0f8a330f
-  #   cleanup: 
-  #     - /include
-  #     - /lib/*.a
-  #     - /lib/*.la
-  #     - /lib/pkgconfig
-
   - shared-modules/linux-audio/fftw3f.json  
   - shared-modules/glu/glu-9.json
 
   - name: wxWidgets
     buildsystem: autotools
+    rm-configure: true
     config-opts:
       - --enable-clipboard
       - --enable-controls
@@ -61,6 +33,7 @@ modules:
       - --enable-svg
       - --enable-unicode
       - --enable-webviewwebkit
+      - --with-gtk=3
       - --with-expat
       - --with-libjpeg
       - --with-libpng
@@ -71,9 +44,9 @@ modules:
       - --disable-tests
       - --disable-precomp-headers
       - --disable-monolithic
-    build-options:
-      env:
-        wxWidgets_USE_DEBUG: 1
+    # build-options:
+    #   env:
+    #     wxWidgets_USE_DEBUG: 1
     sources:
       - type: archive
         url: https://sourceforge.net/projects/wxwindows/files/3.0.2/wxWidgets-3.0.2.tar.bz2
@@ -81,6 +54,8 @@ modules:
 
   - name: cistem
     buildsystem: autotools
+    config-opts:
+      - --with-wx-config=/app/bin/wx-config
     # build-options:
     #   env:
     #     WX_CONFIG: /app/bin/wx-config
@@ -92,9 +67,6 @@ modules:
       - type: archive
         url: https://grigoriefflab.umassmed.edu/sites/default/files/cistem-1.0.0-beta-source-code.tar.gz
         sha256: c62068f53d0a269ffa1bfff34641597d3795989a930686437fba9eed7a991af6
-      # # To avoid wxWidgets version check quirk
-      # - type: patch
-      #   path: configure.patch
       - type: file
         path: org.cistem.cisTEM.svg
       - type: file
