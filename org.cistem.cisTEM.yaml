@@ -1,4 +1,4 @@
-app-id: org.cistem.cistem
+app-id: org.cistem.cisTEM
 runtime: org.freedesktop.Platform
 runtime-version: "23.08"
 sdk: org.freedesktop.Sdk
@@ -90,8 +90,8 @@ modules:
       - type: patch
         path: configure.patch
       - type: file
-        path: org.cistem.cistem.svg
+        path: org.cistem.cisTEM.svg
       - type: file
-        path: org.cistem.cistem.desktop
+        path: org.cistem.cisTEM.desktop
       - type: file
-        path: org.cistem.cistem.metainfo.xml
+        path: org.cistem.cisTEM.metainfo.xml
