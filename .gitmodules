@@ -1,3 +1,6 @@
 [submodule "shared-modules"]
 	path = shared-modules
 	url = https://github.com/flathub/shared-modules.git
+[submodule "deps/flatpak-builder-tools"]
+	path = deps/flatpak-builder-tools
+	url = https://github.com/flatpak/flatpak-builder-tools.git
