@@ -20,20 +20,35 @@ modules:
   - shared-modules/glu/glu-9.json
   - shared-modules/gtk2/gtk2.json
 
+  # - name: libtiff
+  #   buildsystem: autotools
+  #   config-opts:
+  #     - --disable-dependency-tracking
+  #     - --disable-webp
+  #     - --enable-zstd
+  #     - --enable-lzma
+  #     # - --enable-static
+  #     - --with-jpeg-include-dir=/app/include
+  #     - --with-jpeg-lib-dir=/app/lib
+  #     - --without-x
+  #   sources:
+  #     - type: archive
+  #       url: https://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz
+  #       sha256: 67160e3457365ab96c5b3286a0903aa6e78bdc44c4bc737d2e486bcecb6ba976
+
   - name: wxWidgets
     buildsystem: autotools
-    rm-configure: true
     config-opts:
       - --enable-clipboard
       - --enable-controls
-      - --enable-dataviewctrl
+      # - --enable-dataviewctrl
       - --enable-display
       - --enable-dnd
       - --enable-graphics_ctx
       - --enable-std_string
       - --enable-svg
       - --enable-unicode
-      - --enable-webviewwebkit
+      # - --enable-webviewwebkit
       - --with-gtk=2
       - --with-expat
       - --with-libjpeg
@@ -45,9 +60,6 @@ modules:
       - --disable-tests
       - --disable-precomp-headers
       - --disable-monolithic
-    # build-options:
-    #   env:
-    #     wxWidgets_USE_DEBUG: 1
     sources:
       - type: archive
         url: https://sourceforge.net/projects/wxwindows/files/3.0.2/wxWidgets-3.0.2.tar.bz2
@@ -55,11 +67,19 @@ modules:
 
   - name: cistem
     buildsystem: autotools
-    # config-opts:
-    #   - --with-wx-config=/app/bin/wx-config
-    # # build-options:
-    # #   env:
-    # #     WX_CONFIG: /app/bin/wx-config
+    config-opts:
+      - --with-wx-config=/app/bin/wx-config
+      - --with-fftw-dir=/app/lib/fftw
+      # - --with-libtiff
+      - --disable-mkl
+      - --enable-debugmode
+      # - --enable-staticmode
+    build-options:
+      cxxflags: -I/app/include
+      ldflags: -ltiff -L/app/lib
+      env:
+        WX_CONFIG: /app/bin/wx-config
+        PKG_CONFIG_PATH: /app/lib/pkgconfig
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
