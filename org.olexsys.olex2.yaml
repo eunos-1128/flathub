@@ -19,6 +19,7 @@ modules:
   # - deps/pypi-deps.json
   - shared-modules/glu/glu-9.json
   - shared-modules/gtk2/gtk2.json
+  - shared-modules/python2.7/python-2.7.json
 
   - name: wxWidgets
     buildsystem: autotools
@@ -33,7 +34,7 @@ modules:
       - --enable-svg
       - --enable-unicode
       - --enable-webviewwebkit
-      - --with-gtk=3
+      - --with-gtk=2
       - --with-expat
       - --with-libjpeg
       - --with-libpng
@@ -48,32 +49,36 @@ modules:
       - type: archive
         url: https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.6/wxWidgets-3.2.6.tar.bz2
         sha256: 939e5b77ddc5b6092d1d7d29491fe67010a2433cf9b9c0d841ee4d04acb9dce7
-
-  # - name: scons
-  #   buildsystem: simple
-  #   build-commands:
-  #     - pip3 install --no-index --no-build-isolation --prefix=/app .
-  #   cleanup: ['*']
-  #   sources:
-  #     - type: archive
-  #       sha256: cad573b329b6a5bc7e654b01f0231064acc979026af68a9e467ddb32bf2ee501
-  #       url: https://downloads.sourceforge.net/project/scons/scons/4.8.1/SCons-4.8.1.tar.gz
-  #       x-checker-data:
-  #         type: anitya
-  #         project-id: 4770
-  #         url-template: https://downloads.sourceforge.net/project/scons/scons/$version/SCons-$version.tar.gz
+  
+  - name: scons
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --no-build-isolation --prefix=/app .
+    cleanup: ['*']
+    sources:
+      - type: archive
+        sha256: cad573b329b6a5bc7e654b01f0231064acc979026af68a9e467ddb32bf2ee501
+        url: https://downloads.sourceforge.net/project/scons/scons/4.8.1/SCons-4.8.1.tar.gz
+        x-checker-data:
+          type: anitya
+          project-id: 4770
+          url-template: https://downloads.sourceforge.net/project/scons/scons/$version/SCons-$version.tar.gz
 
   - name: olex2
     buildsystem: simple
     build-options:
+      ldflags: "-lfontconfig -ldl"
       env:
+        # PYTHON: /u6sr/bin/python3  # Python 3 のパスを指定
+        # PYTHON_CONFIG: /usr/bin/python3-config  # python3-config を指定
         WX_CONFIG: /app/bin/wx-config-3.0
         PKG_CONFIG_PATH: /app/lib/pkgconfig
-    # build-commands:
-    #   - scons -j ${FLATPAK_BUILDER_N_JOBS}
+        LIBS: "-lfontconfig -ldl"
+        LDLIBS: "-lfontconfig -ldl"
     build-commands:
-      - make -j ${FLATPAK_BUILDER_N_JOBS}
-      - make install
+      - scons -j ${FLATPAK_BUILDER_N_JOBS}
+      - install -Dm755 build/scons/gnu/release-64bit/py3.1/exe/* ${FLATPAK_DEST}/bin/
+      - install -Dm644 build/scons/gnu/release-64bit/py3.1/lib/* ${FLATPAK_DEST}/lib/
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
@@ -81,14 +86,15 @@ modules:
     sources:
       - type: git
         url: https://github.com/pcxod/olex2.git
-        commit: 19aeb66f21119f1cc932424ce4a52da66759b895
+        commit: 3c6492a785c0a5ce70d397b3907bc281fc84c3a7
+      - type: patch
+        path: SConstruct.patch
       - type: file
         path: org.olexsys.olex2.svg
       - type: file
         path: org.olexsys.olex2.desktop
-      - type: shell
-        commands:
-          - ln -s $(which python3-config) /app/bin/python-config
+      # - type: shell
+      #   commands:
+      #     - ln -s $(which python3-config) /app/bin/python-config
       # - type: file
       #   path: org.olexsys.olex2.metainfo.xml
-
