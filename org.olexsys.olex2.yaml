@@ -67,21 +67,26 @@ modules:
   - name: olex2
     buildsystem: simple
     build-options:
-      ldflags: "-lfontconfig -ldl"
+      # ldflags: "-lfontconfig -ldl -lpython3.12"
       env:
-        # PYTHON: /u6sr/bin/python3  # Python 3 のパスを指定
-        # PYTHON_CONFIG: /usr/bin/python3-config  # python3-config を指定
+        PYTHON: /app/bin/python
+        PYTHON_CONFIG: /app/bin/python-config
         WX_CONFIG: /app/bin/wx-config-3.0
         PKG_CONFIG_PATH: /app/lib/pkgconfig
-        LIBS: "-lfontconfig -ldl"
-        LDLIBS: "-lfontconfig -ldl"
+        # LIBS: "-lfontconfig -ldl"
+        # LDLIBS: "-lfontconfig -ldl -lpython3.12"
     build-commands:
       - scons -j ${FLATPAK_BUILDER_N_JOBS}
       - install -Dm755 build/scons/gnu/release-64bit/py3.1/exe/* ${FLATPAK_DEST}/bin/
       - install -Dm644 build/scons/gnu/release-64bit/py3.1/lib/* ${FLATPAK_DEST}/lib/
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
-      - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - desktop-file-edit --set-icon=org.olexsys.olex2 scripts/olex2.desktop
+      - desktop-file-edit --set-tryexec=olex2 scripts/olex2.desktop
+      - desktop-file-edit --set-exec=olex2 scripts/olex2.desktop
+      - desktop-file-edit --set-categories="Science;Chemistry;Engineering;Education;Application" scripts/olex2.desktop
+      - desktop-file-edit --set-generic-name="Crystallography GUI" scripts/olex2.desktop
+      - install -Dm644 scripts/olex2.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       # - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:
       - type: git
