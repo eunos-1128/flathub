@@ -1,5 +1,5 @@
 diff --git a/SConstruct b/SConstruct
-index 244b0fa0..8bb8fb24 100644
+index 244b0fa0..9f82c768 100644
 --- a/SConstruct
 +++ b/SConstruct
 @@ -73,12 +73,12 @@ if env['TOOL'] == 'vc8':
@@ -118,8 +118,9 @@ index 244b0fa0..8bb8fb24 100644
  sdl_files = fileListToStringList('sdl', sdl) + fileListToStringList('sdl/smart', sdl_smart) +\
    fileListToStringList('sdl/exparse', sdl_exp) + fileListToStringList('sdl/math', sdl_math)
  sdl_files = processFileNameList(sdl_files, env, out_dir + 'sdl')
- env.StaticLibrary(out_dir + 'lib/sdl', sdl_files)
+-env.StaticLibrary(out_dir + 'lib/sdl', sdl_files)
 -             
++sdl_lib = env.StaticLibrary(out_dir + 'lib/sdl', sdl_files)
 +
  generic_files_list = fileListToStringList('xlib', xlib) + \
                  fileListToStringList('xlib/macro', xlib_macro) + \
@@ -155,3 +156,41 @@ index 244b0fa0..8bb8fb24 100644
  #link in the res file...
  if sys.platform[:3] == 'win':
    res_file = out_dir + 'olex/app.res'
+@@ -355,7 +355,7 @@ if sys.platform[:3] == 'win':
+   olex2_env.Append(RCFLAGS=['/l 0x809'])
+   olex2_env.Append(LINKFLAGS=['/MANIFEST', '/MANIFESTUAC:"level=\'asInvoker\'"',
+     '/PDB:' + out_dir + 'exe/olex2.pdb'])
+-olex2_env.Program(out_dir+'exe/olex2', generic_files + olex2_files)
++olex2_exe = olex2_env.Program(out_dir+'exe/olex2', generic_files + olex2_files)
+ 
+ unirun_files = np_repository + fileListToStringList('unirun', unirun)
+ unirun_files.append('./repository/patchapi.cpp')
+@@ -366,7 +366,7 @@ unirun_files = processFileNameList(unirun_files, unirun_env, out_dir+'unirun')
+ if sys.platform[:3] == 'win':
+   unirun_env.Append(LINKFLAGS=['/MANIFEST', '/MANIFESTUAC:"level=\'asInvoker\'"',
+     '/PDB:' + out_dir + 'exe/unirun.pdb'])
+-unirun_env.Program(out_dir+'exe/unirun', unirun_files)
++unirun_exe = unirun_env.Program(out_dir+'exe/unirun', unirun_files)
+ 
+ tests_files = generic_files_list + fileListToStringList('tests/tests', tests)
+ tests_files.append('./repository/olxvar.cpp')
+@@ -376,9 +376,18 @@ tests_files.append('./repository/hkl_util.cpp')
+ if sys.platform[:3] == 'win':
+   tests_env.Append(LINKFLAGS=['/MANIFEST', '/PDB:' + out_dir + 'exe/tests.pdb'])
+ tests_files = processFileNameList(tests_files, tests_env, out_dir+'tests')
+-tests_env.Program(out_dir+'exe/tests', tests_files)
++tests_exe = tests_env.Program(out_dir+'exe/tests', tests_files)
+ 
+ try:
+   import _imaging
+ except:
+   print('!! You will need to install PIL')
++
++install_dir = '/app'
++
++env.Alias('install', [
++    env.Install(install_dir + '/bin', olex2_exe),
++    env.Install(install_dir + '/bin', unirun_exe),
++    env.Install(install_dir + '/bin', tests_exe),
++    env.Install(install_dir + '/lib', sdl_lib)
++])
