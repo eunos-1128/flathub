@@ -1,5 +1,5 @@
 diff --git a/SConstruct b/SConstruct
-index 244b0fa0..68edc620 100644
+index 244b0fa0..8bb8fb24 100644
 --- a/SConstruct
 +++ b/SConstruct
 @@ -73,12 +73,12 @@ if env['TOOL'] == 'vc8':
@@ -108,14 +108,7 @@ index 244b0fa0..68edc620 100644
      if sys.platform[:6] == 'darwin':
        env.Append(CCFLAGS = '-D__MAC__')
        env.ParseConfig("wx-config --cxxflags --libs std gl")
-@@ -294,18 +294,18 @@ else:
-     env.Append(CCFLAGS = ['-D__WXWIDGETS__'])
-     unirun_env = env.Clone()
-     env.Append(CCFLAGS = ['-D_PYTHON'])
--    env.ParseConfig("python-config --includes")
--    env.ParseConfig("python-config --libs")
-+    env.ParseConfig("python3-config --includes")
-+    env.ParseConfig("python3-config --libs")
+@@ -299,13 +299,13 @@ else:
    except:
      print('Please make sure that wxWidgets and Python config scripts are available')
      Exit(1)
