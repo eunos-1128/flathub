@@ -11,14 +11,16 @@ finish-args:
   - --filesystem=home
   - --share=ipc
   - --device=dri
-  - --socket=wayland
-  - --socket=fallback-x11
+  - --socket=x11
   - --share=network
+  - --env=PYTHON=/usr/bin/python
+  - --env=LD_LIBRARY_PATH=/app/lib
 
 modules:
   - shared-modules/linux-audio/fftw3f.json  
   - shared-modules/glu/glu-9.json
   - shared-modules/gtk2/gtk2.json
+  - shared-modules/python2.7/python-2.7.json
 
   # - name: libtiff
   #   buildsystem: autotools
@@ -39,27 +41,27 @@ modules:
   - name: wxWidgets
     buildsystem: autotools
     config-opts:
-      - --enable-clipboard
-      - --enable-controls
+      # - --enable-clipboard
+      # - --enable-controls
       # - --enable-dataviewctrl
-      - --enable-display
-      - --enable-dnd
-      - --enable-graphics_ctx
-      - --enable-std_string
-      - --enable-svg
+      # - --enable-display
+      # - --enable-dnd
+      # - --enable-graphics_ctx
+      # - --enable-std_string
+      # - --enable-svg
       - --enable-unicode
       # - --enable-webviewwebkit
       - --with-gtk=2
-      - --with-expat
-      - --with-libjpeg
-      - --with-libpng
-      - --with-libtiff
-      - --with-opengl
-      - --with-zlib
-      - --disable-dependency-tracking
-      - --disable-tests
-      - --disable-precomp-headers
-      - --disable-monolithic
+      # - --with-expat
+      # - --with-libjpeg
+      # - --with-libpng
+      # - --with-libtiff
+      # - --with-opengl
+      # - --with-zlib
+      # - --disable-dependency-tracking
+      # - --disable-tests
+      # - --disable-precomp-headers
+      # - --disable-monolithic
     sources:
       - type: archive
         url: https://sourceforge.net/projects/wxwindows/files/3.0.2/wxWidgets-3.0.2.tar.bz2
@@ -69,17 +71,26 @@ modules:
     buildsystem: autotools
     config-opts:
       - --with-wx-config=/app/bin/wx-config
-      - --with-fftw-dir=/app/lib/fftw
-      # - --with-libtiff
+      - --with-fftw-dir=/app/
+      - --with-libtiff
       - --disable-mkl
       - --enable-debugmode
       # - --enable-staticmode
+    # build-options:
+    #   cxxflags: -I/app/include
+    #   ldflags: -ltiff -L/app/lib
+    #   env:
+    #     WX_CONFIG: /app/bin/wx-config
+    #     PKG_CONFIG_PATH: /app/lib/pkgconfig
     build-options:
-      cxxflags: -I/app/include
-      ldflags: -ltiff -L/app/lib
+      ldflags: "-ltiff -lpython2.7 -L/app/lib"
       env:
+        PYTHON: /usr/bin/python
+        PYTHON_CONFIG: /usr/bin/python-config
         WX_CONFIG: /app/bin/wx-config
         PKG_CONFIG_PATH: /app/lib/pkgconfig
+        # LIBS: "-ltiff"
+        # LDLIBS: "-ltiff -lpython2.7"
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
