@@ -1,6 +1,6 @@
 app-id: org.cistem.cisTEM
 runtime: org.freedesktop.Platform
-runtime-version: "23.08"
+runtime-version: "24.08"
 sdk: org.freedesktop.Sdk
 cleanup:
   - /include
@@ -13,55 +13,60 @@ finish-args:
   - --device=dri
   - --socket=x11
   - --share=network
-  - --env=PYTHON=/usr/bin/python
   - --env=LD_LIBRARY_PATH=/app/lib
 
 modules:
   - shared-modules/linux-audio/fftw3f.json  
   - shared-modules/glu/glu-9.json
   - shared-modules/gtk2/gtk2.json
-  - shared-modules/python2.7/python-2.7.json
+  # - shared-modules/python2.7/python-2.7.json
 
-  # - name: libtiff
-  #   buildsystem: autotools
-  #   config-opts:
-  #     - --disable-dependency-tracking
-  #     - --disable-webp
-  #     - --enable-zstd
-  #     - --enable-lzma
-  #     # - --enable-static
-  #     - --with-jpeg-include-dir=/app/include
-  #     - --with-jpeg-lib-dir=/app/lib
-  #     - --without-x
-  #   sources:
-  #     - type: archive
-  #       url: https://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz
-  #       sha256: 67160e3457365ab96c5b3286a0903aa6e78bdc44c4bc737d2e486bcecb6ba976
+  - name: libtiff
+    buildsystem: autotools
+    config-opts:
+      - --disable-dependency-tracking
+      - --disable-webp
+      - --enable-zstd
+      - --enable-lzma
+      - --enable-static
+      - --enable-shared
+      - --with-jpeg-include-dir=/app/include
+      - --with-jpeg-lib-dir=/app/lib
+      - --without-x
+    sources:
+      - type: archive
+        url: https://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz
+        sha256: 67160e3457365ab96c5b3286a0903aa6e78bdc44c4bc737d2e486bcecb6ba976
 
   - name: wxWidgets
     buildsystem: autotools
     config-opts:
-      # - --enable-clipboard
-      # - --enable-controls
-      # - --enable-dataviewctrl
-      # - --enable-display
-      # - --enable-dnd
-      # - --enable-graphics_ctx
-      # - --enable-std_string
-      # - --enable-svg
+      - --enable-clipboard
+      - --enable-controls
+      - --enable-dataviewctrl
+      - --enable-display
+      - --enable-dnd
+      - --enable-graphics_ctx
+      - --enable-std_string
+      - --enable-svg
       - --enable-unicode
-      # - --enable-webviewwebkit
+      - --enable-webviewwebkit
       - --with-gtk=2
-      # - --with-expat
-      # - --with-libjpeg
-      # - --with-libpng
-      # - --with-libtiff
-      # - --with-opengl
-      # - --with-zlib
-      # - --disable-dependency-tracking
-      # - --disable-tests
-      # - --disable-precomp-headers
-      # - --disable-monolithic
+      - --with-expat
+      - --with-libjpeg
+      - --with-libpng
+      - --with-libtiff
+      - --with-opengl
+      - --with-zlib
+      - --disable-dependency-tracking
+      - --disable-tests
+      - --disable-precomp-headers
+      - --disable-monolithic
+    build-options:
+      ldflags: "-ltiff -L/app/lib"
+      env:
+        LIBS: "-ltiff"
+        PKG_CONFIG_PATH: "/app/lib/pkgconfig"
     sources:
       - type: archive
         url: https://sourceforge.net/projects/wxwindows/files/3.0.2/wxWidgets-3.0.2.tar.bz2
@@ -71,26 +76,18 @@ modules:
     buildsystem: autotools
     config-opts:
       - --with-wx-config=/app/bin/wx-config
-      - --with-fftw-dir=/app/
       - --with-libtiff
       - --disable-mkl
       - --enable-debugmode
-      # - --enable-staticmode
-    # build-options:
-    #   cxxflags: -I/app/include
-    #   ldflags: -ltiff -L/app/lib
-    #   env:
-    #     WX_CONFIG: /app/bin/wx-config
-    #     PKG_CONFIG_PATH: /app/lib/pkgconfig
+      - --enable-staticmode
     build-options:
-      ldflags: "-ltiff -lpython2.7 -L/app/lib"
+      ldflags: "-ltiff -L/app/lib"
       env:
-        PYTHON: /usr/bin/python
-        PYTHON_CONFIG: /usr/bin/python-config
+        LD_LIBRARY_PATH: "/app/lib"
         WX_CONFIG: /app/bin/wx-config
         PKG_CONFIG_PATH: /app/lib/pkgconfig
-        # LIBS: "-ltiff"
-        # LDLIBS: "-ltiff -lpython2.7"
+        LIBS: "-ltiff"
+        LDLIBS: "-ltiff"
     post-install:
       - install -Dm644 ${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
