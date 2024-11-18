@@ -29,7 +29,8 @@ modules:
       - --enable-zstd
       - --enable-lzma
       - --enable-static
-      - --enable-shared
+      - --disable-shared
+      # - --enable-shared
       - --with-jpeg-include-dir=/app/include
       - --with-jpeg-lib-dir=/app/lib
       - --without-x
@@ -41,6 +42,8 @@ modules:
   - name: wxWidgets
     buildsystem: autotools
     config-opts:
+      - --enable-static
+      - --disable-shared
       - --enable-clipboard
       - --enable-controls
       - --enable-dataviewctrl
