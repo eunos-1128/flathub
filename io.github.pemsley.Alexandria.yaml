@@ -49,8 +49,7 @@ modules:
         url: https://poppler.freedesktop.org/poppler-24.11.0.tar.xz
         sha256: 7723d880565211740c13649d24a300257b86ddd7fa2d208187ff7e5cc8dfbd58
 
-  # Offline-buildable wheels + sha256s, generated from
-  # requirements-flatpak.txt by flatpak-pip-generator.
+  # Offline-buildable wheels + sha256s, generated from `./python-deps.sh`.
   - python-deps.yaml
 
   - name: alexandria
