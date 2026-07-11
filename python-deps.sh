@@ -5,8 +5,8 @@ if ! python3 -c "import requirements_parser" >/dev/null 2>&1; then
 fi
 
 flatpak-builder-tools/pip/flatpak-pip-generator \
-    --requirements-file requirements-flatpak.txt \
-    --prefer-wheels=cryptography,lxml \
+    --requirements-file requirements.txt \
+    --prefer-wheels=cryptography \
     --runtime org.gnome.Sdk//50 \
     --output python-deps \
     --yaml
