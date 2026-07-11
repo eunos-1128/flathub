@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 if ! python3 -c "import requirements_parser" >/dev/null 2>&1; then
   pip3 install requirements-parser
 fi
