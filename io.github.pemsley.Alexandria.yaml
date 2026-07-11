@@ -25,11 +25,9 @@ modules:
         url: https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz
         sha256: c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74
 
-  # ── Poppler ──────────────────────────────────────────────────────────────
   # Provides gi.repository.Poppler (viewer, references panel)
   # and /app/bin/pdftotext (metadata extraction pipeline).
   # Not in the GNOME Platform runtime — must be bundled.
-  #
   - name: poppler
     buildsystem: cmake-ninja
     config-opts:
@@ -51,17 +49,8 @@ modules:
         url: https://poppler.freedesktop.org/poppler-24.11.0.tar.xz
         sha256: 7723d880565211740c13649d24a300257b86ddd7fa2d208187ff7e5cc8dfbd58
 
-  # ── Python runtime dependencies ─────────────────────────────────────────
   # Offline-buildable wheels + sha256s, generated from
-  # requirements-flatpak.txt by flatpak-pip-generator. To regenerate
-  # (e.g. after bumping a pinned version):
-  #
-  #   python3 flatpak-pip-generator \
-  #       --requirements-file requirements-flatpak.txt \
-  #       --output python-deps --yaml
-  #
-  # flatpak-pip-generator:
-  #   https://github.com/flatpak/flatpak-builder-tools/tree/master/pip
+  # requirements-flatpak.txt by flatpak-pip-generator.
   - python-deps.yaml
 
   - name: alexandria
