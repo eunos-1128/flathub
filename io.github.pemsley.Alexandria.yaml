@@ -67,4 +67,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/pemsley/Alexandria.git
+        # TODO: Point to specific tag or commit.
         branch: main
