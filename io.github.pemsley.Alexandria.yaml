@@ -3,23 +3,19 @@ runtime: org.gnome.Platform
 runtime-version: '50'
 sdk: org.gnome.Sdk
 command: alexandria-browse
-
-finish-args:
-  - --share=network          # CrossRef / OpenAlex / arXiv API calls
-  - --share=ipc              # X11 shared-memory transport
-  - --socket=wayland
-  - --socket=fallback-x11
-  - --device=dri             # GPU acceleration
-  - --filesystem=xdg-documents   # PDF library (default ~/Documents/Alexandria) + sidecar JSON files
-
 build-options:
   env:
     PIP_DISABLE_PIP_VERSION_CHECK: '1'
     PIP_NO_COMPILE: '1'
+finish-args:
+  - --share=network  # CrossRef / OpenAlex / arXiv API calls
+  - --share=ipc  # X11 shared-memory transport
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri  # GPU acceleration
+  - --filesystem=xdg-documents  # PDF library (default ~/Documents/Alexandria) + sidecar JSON files
 
 modules:
-
-  # ── poppler-data (encoding tables, CMap files) ──────────────────────────
   - name: poppler-data
     buildsystem: cmake-ninja
     config-opts:
@@ -68,7 +64,6 @@ modules:
   #   https://github.com/flatpak/flatpak-builder-tools/tree/master/pip
   - python-deps.yaml
 
-  # ── Alexandria ───────────────────────────────────────────────────────────
   - name: alexandria
     buildsystem: simple
     build-commands:
@@ -82,13 +77,6 @@ modules:
       - install -Dm644 data/io.github.pemsley.Alexandria.metainfo.xml
             /app/share/metainfo/io.github.pemsley.Alexandria.metainfo.xml
     sources:
-      # Flathub builders pull from a fixed ref. Local dev builds can
-      # comment this block out and substitute `type: dir, path: .`
-      # to test working-tree changes without tagging.
-      #
-      # `tag:` alone is sufficient for flatpak-builder. For Flathub
-      # submission, add `commit:` with the sha of the v0.1.0 tag
-      # (`git rev-parse v0.1.0^{commit}`) for build reproducibility.
       - type: git
         url: https://github.com/pemsley/Alexandria.git
-        tag: v0.1.0
+        branch: main
