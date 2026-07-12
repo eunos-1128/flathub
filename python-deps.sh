@@ -6,8 +6,8 @@ fi
 
 flatpak-builder-tools/pip/flatpak-pip-generator \
     --requirements-file requirements.txt \
-    --prefer-wheels=cryptography \
-    --ignore-installed=lxml \
+    --prefer-wheels cryptography \
+    --ignore-installed lxml \
     --runtime org.gnome.Sdk//50 \
     --output python-deps \
     --yaml
