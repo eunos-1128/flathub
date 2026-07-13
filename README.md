@@ -11,8 +11,7 @@ This repository contains the Flatpak packaging for [Alexandria](https://github.c
 Alexandria is available from Flathub:
 
 ```shell
-flatpak remote-add --user --if-not-exists flathub \
-  https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 flatpak install --user flathub io.github.pemsley.Alexandria
 flatpak run io.github.pemsley.Alexandria
