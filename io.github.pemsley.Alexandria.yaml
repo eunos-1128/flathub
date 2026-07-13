@@ -38,6 +38,11 @@ modules:
       - type: archive
         url: https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz
         sha256: c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74
+        x-checker-data:
+          type: anitya
+          project-id: 3687
+          stable-only: true
+          url-template: https://poppler.freedesktop.org/poppler-data-$version.tar.gz
 
   # Poppler's GLib bindings, GObject Introspection typelib and command-line
   # utilities are not provided by org.gnome.Platform//50.
@@ -61,6 +66,11 @@ modules:
       - type: archive
         url: https://poppler.freedesktop.org/poppler-24.11.0.tar.xz
         sha256: 7723d880565211740c13649d24a300257b86ddd7fa2d208187ff7e5cc8dfbd58
+        x-checker-data:
+          type: anitya
+          project-id: 3686
+          stable-only: true
+          url-template: https://poppler.freedesktop.org/poppler-$version.tar.xz
 
   # Python 3 and PyGObject are provided by org.gnome.Platform//50.
   # Application-specific Python packages and their transitive dependencies
@@ -80,3 +90,7 @@ modules:
         url: https://github.com/pemsley/Alexandria.git
         tag: Release-0.2.0
         commit: 9db42a4ecbca430710379976b94c23b3928aa289
+        x-checker-data:
+          type: git
+          tag-pattern: ^Release-([\d.]+)$
+          is-main-source: true
