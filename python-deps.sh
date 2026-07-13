@@ -6,6 +6,7 @@ fi
 
 # lxml is present in org.gnome.Sdk//50 as a build-time dependency,
 # but not in org.gnome.Platform//50, so it must be installed into /app.
+# Avoid building cryptography from source, which requires maturin and Rust.
 flatpak-builder-tools/pip/flatpak-pip-generator \
     --requirements-file requirements.txt \
     --prefer-wheels cryptography \
