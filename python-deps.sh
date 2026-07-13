@@ -4,6 +4,8 @@ if ! python3 -c "import requirements_parser" >/dev/null 2>&1; then
     pip3 install requirements-parser
 fi
 
+# lxml is present in org.gnome.Sdk//50 as a build-time dependency,
+# but not in org.gnome.Platform//50, so it must be installed into /app.
 flatpak-builder-tools/pip/flatpak-pip-generator \
     --requirements-file requirements.txt \
     --prefer-wheels cryptography \
