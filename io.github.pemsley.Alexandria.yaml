@@ -6,7 +6,6 @@ command: alexandria-browse
 build-options:
   env:
     PIP_DISABLE_PIP_VERSION_CHECK: '1'
-    PIP_NO_COMPILE: '1'
 finish-args:
   - --share=network  # CrossRef / OpenAlex / arXiv API calls
   - --share=ipc  # X11 shared-memory transport
@@ -14,6 +13,14 @@ finish-args:
   - --socket=fallback-x11
   - --device=dri  # GPU acceleration
   - --filesystem=xdg-documents  # PDF library (default ~/Documents/Alexandria) + sidecar JSON files
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /lib/cmake
+  - /share/man
+  - /share/gtk-doc
+  - '*.a'
+  - '*.la'
 
 modules:
   - name: poppler-data
