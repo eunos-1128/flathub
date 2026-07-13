@@ -65,3 +65,5 @@ modules:
         url: https://github.com/pemsley/Alexandria.git
         tag: v0.2.0
         commit: 550f1daf2d02ee154c2585231b977b913d4c5eab
+      - type: patch
+        path: fix-console-script-argv-default.patch
