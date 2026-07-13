@@ -1,4 +1,4 @@
-# Generated with flatpak-pip-generator --requirements-file requirements.txt --prefer-wheels=cryptography --ignore-installed=lxml --runtime org.gnome.Sdk//50 --output python-deps --yaml
+# Generated with flatpak-pip-generator --requirements-file requirements.txt --prefer-wheels cryptography --ignore-installed lxml --runtime org.gnome.Sdk//50 --output python-deps --yaml
 name: python-deps
 buildsystem: simple
 build-commands: []
