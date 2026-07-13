@@ -29,7 +29,7 @@ flatpak install --user flathub org.flatpak.Builder
 Clone this repository:
 
 ```shell
-git clone https://github.com/flathub/io.github.pemsley.Alexandria.git
+git clone --recursive https://github.com/flathub/io.github.pemsley.Alexandria.git
 cd io.github.pemsley.Alexandria
 ```
 
