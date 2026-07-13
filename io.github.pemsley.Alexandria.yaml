@@ -1,7 +1,12 @@
 app-id: io.github.pemsley.Alexandria
+
+# Python 3.13, PyGObject, Pycairo, GTK 4, libadwaita SQLite (including Python's sqlite3 module),
+# GLib/GObject/GIO, GDK, Cairo and Pango are provided by
+# org.gnome.Platform//50.
 runtime: org.gnome.Platform
 runtime-version: '50'
 sdk: org.gnome.Sdk
+
 command: alexandria-browse
 build-options:
   env:
@@ -23,6 +28,8 @@ cleanup:
   - '*.la'
 
 modules:
+  # Additional CMap and encoding data used by Poppler, particularly for
+  # CJK PDFs. Not provided by org.gnome.Platform//50, so it is bundled.
   - name: poppler-data
     buildsystem: cmake-ninja
     config-opts:
@@ -32,9 +39,8 @@ modules:
         url: https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz
         sha256: c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74
 
-  # Provides gi.repository.Poppler (viewer, references panel)
-  # and /app/bin/pdftotext (metadata extraction pipeline).
-  # Not in the GNOME Platform runtime — must be bundled.
+  # Poppler's GLib bindings, GObject Introspection typelib and command-line
+  # utilities are not provided by org.gnome.Platform//50.
   - name: poppler
     buildsystem: cmake-ninja
     config-opts:
@@ -56,7 +62,9 @@ modules:
         url: https://poppler.freedesktop.org/poppler-24.11.0.tar.xz
         sha256: 7723d880565211740c13649d24a300257b86ddd7fa2d208187ff7e5cc8dfbd58
 
-  # Offline-buildable wheels + sha256s, generated from `./python-deps.sh`.
+  # Python 3 and PyGObject are provided by org.gnome.Platform//50.
+  # Application-specific Python packages and their transitive dependencies
+  # are bundled below for offline builds.
   - python-deps.yaml
 
   - name: alexandria
