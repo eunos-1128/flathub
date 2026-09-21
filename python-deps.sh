@@ -8,14 +8,14 @@ fi
 # so merge it into a temporary file for generation only.
 tmp_requirements="$(mktemp)"
 trap 'rm -f "$tmp_requirements"' EXIT
-cat requirements.txt > "$tmp_requirements"
-echo "meson-python>=0.16.0" >> "$tmp_requirements"
+echo "meson-python>=0.16.0" > "${tmp_requirements}"
+cat requirements.txt >> "${tmp_requirements}"
 
 # lxml is present in org.gnome.Sdk//50 as a build-time dependency,
 # but not in org.gnome.Platform//50, so it must be installed into /app.
 # Avoid building cryptography from source, which requires maturin and Rust.
 flatpak-builder-tools/pip/flatpak-pip-generator \
-    --requirements-file "$tmp_requirements" \
+    --requirements-file "${tmp_requirements}" \
     --prefer-wheels cryptography \
     --ignore-installed lxml \
     --runtime org.gnome.Sdk//50 \
