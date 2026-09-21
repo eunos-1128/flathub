@@ -1,8 +1,20 @@
-# Generated with flatpak-pip-generator --requirements-file /tmp/tmp.BvpKuwmNiY --prefer-wheels cryptography --ignore-installed lxml --runtime org.gnome.Sdk//50 --output python-deps --yaml
+# Generated with flatpak-pip-generator --requirements-file /tmp/tmp.zh11I0x5zM --prefer-wheels cryptography --ignore-installed lxml --runtime org.gnome.Sdk//50 --output python-deps --yaml
 name: python-deps
 buildsystem: simple
 build-commands: []
 modules:
+  - name: python3-meson-python
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} "meson-python>=0.16.0" --no-build-isolation
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/9e/4f/03aeed5a32e7e8158d8c617fe65b622410db974fe02e3bd78da9689a44fd/meson_python-0.21.1-py3-none-any.whl
+        sha256: 270bc9b78957c47e0aa1758ad616dba3f943d8f9cbdb944d318c3c1c7a49e4bd
+      - type: file
+        url: https://files.pythonhosted.org/packages/b9/8e/d883718e872abc214ba053f60f7e6edc2abd5ffbd1544beb01a9c92ddd3c/pyproject_metadata-0.12.1-py3-none-any.whl
+        sha256: f7162d580a96386a8eb096da06215f981f547d1490f03055ef99e323bc2da427
   - name: python3-bibtexparser
     buildsystem: simple
     build-commands:
@@ -165,15 +177,3 @@ modules:
         --prefix=${FLATPAK_DEST} "sortedcontainers==2.4.0" --no-build-isolation
     sources:
       - *id008
-  - name: python3-meson-python
-    buildsystem: simple
-    build-commands:
-      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "meson-python>=0.16.0" --no-build-isolation
-    sources:
-      - type: file
-        url: https://files.pythonhosted.org/packages/9e/4f/03aeed5a32e7e8158d8c617fe65b622410db974fe02e3bd78da9689a44fd/meson_python-0.21.1-py3-none-any.whl
-        sha256: 270bc9b78957c47e0aa1758ad616dba3f943d8f9cbdb944d318c3c1c7a49e4bd
-      - type: file
-        url: https://files.pythonhosted.org/packages/b9/8e/d883718e872abc214ba053f60f7e6edc2abd5ffbd1544beb01a9c92ddd3c/pyproject_metadata-0.12.1-py3-none-any.whl
-        sha256: f7162d580a96386a8eb096da06215f981f547d1490f03055ef99e323bc2da427
