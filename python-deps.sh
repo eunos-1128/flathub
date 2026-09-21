@@ -7,10 +7,13 @@ fi
 # lxml is present in org.gnome.Sdk//50 as a build-time dependency,
 # but not in org.gnome.Platform//50, so it must be installed into /app.
 # Avoid building cryptography from source, which requires maturin and Rust.
+# meson-python isn't in requirements.txt (build-time-only dep of pycairo),
+# so add it explicitly.
 flatpak-builder-tools/pip/flatpak-pip-generator \
     --requirements-file requirements.txt \
     --prefer-wheels cryptography \
     --ignore-installed lxml \
     --runtime org.gnome.Sdk//50 \
     --output python-deps \
-    --yaml
+    --yaml \
+    "meson-python>=0.16.0"
