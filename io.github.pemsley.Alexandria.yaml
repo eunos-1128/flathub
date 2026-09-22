@@ -1,8 +1,8 @@
 app-id: io.github.pemsley.Alexandria
 
-# Python 3.13, PyGObject, Pycairo, GTK 4, libadwaita SQLite (including Python's sqlite3 module), GLib/GObject/GIO, GDK, Cairo and Pango are provided by org.gnome.Platform//50.
+# Python 3.13, PyGObject, Pycairo, GTK 4, libadwaita SQLite (including Python's sqlite3 module), GLib/GObject/GIO, GDK, Cairo and Pango are provided by org.gnome.Platform//51.
 runtime: org.gnome.Platform
-runtime-version: '50'
+runtime-version: '51'
 sdk: org.gnome.Sdk
 
 command: alexandria-browse
