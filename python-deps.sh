@@ -6,7 +6,6 @@ fi
 
 # pygobject and pycairo are already in org.gnome.Platform//51, so skip them.
 # lxml is in the Sdk but not the Platform runtime, so it still needs installing.
-# Avoid building cryptography from source, which requires maturin and Rust.
 flatpak-builder-tools/pip/flatpak-pip-generator \
     --requirements-file requirements.txt \
     --ignore-pkg 'pygobject,pycairo' \
