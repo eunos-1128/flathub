@@ -14,7 +14,7 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri  # GPU acceleration
-  - --filesystem=xdg-documents  # PDF library (default ~/Documents/Alexandria) + sidecar JSON files
+  - --filesystem=xdg-documents/Alexandria  # PDF library (default ~/Documents/Alexandria) + sidecar JSON files
 cleanup:
   - /include
   - /lib/pkgconfig
